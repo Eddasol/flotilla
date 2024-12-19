@@ -157,7 +157,7 @@ export const AlertProvider: FC<Props> = ({ children }) => {
                     if (newRecentFailedMissions.length > 0) setNewFailedMissions(newRecentFailedMissions)
                     setRecentFailedMissions(newRecentFailedMissions)
                 })
-                .catch((e) => {
+                .catch(() => {
                     setAlert(
                         AlertType.RequestFail,
                         <FailedRequestAlertContent

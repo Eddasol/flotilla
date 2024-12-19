@@ -132,7 +132,7 @@ const useMissionRuns = (): IMissionRunsContext => {
                 statuses: [MissionStatus.Ongoing, MissionStatus.Paused],
                 pageSize: 100,
                 orderBy: 'StartTime desc',
-            }).catch((e) => {
+            }).catch(() => {
                 setAlert(
                     AlertType.RequestFail,
                     <FailedRequestAlertContent translatedMessage={TranslateText('Failed to retrieve mission runs')} />,
@@ -153,7 +153,7 @@ const useMissionRuns = (): IMissionRunsContext => {
                 statuses: [MissionStatus.Pending],
                 pageSize: 100,
                 orderBy: 'DesiredStartTime',
-            }).catch((e) => {
+            }).catch(() => {
                 setAlert(
                     AlertType.RequestFail,
                     <FailedRequestAlertContent translatedMessage={TranslateText('Failed to retrieve mission runs')} />,
