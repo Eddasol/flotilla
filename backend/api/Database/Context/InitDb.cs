@@ -51,8 +51,8 @@ namespace Api.Database.Context
             var installation1 = new Installation
             {
                 Id = Guid.NewGuid().ToString(),
-                Name = "Huldra",
-                InstallationCode = "HUA",
+                Name = "Northern Lights",
+                InstallationCode = "NLS",
             };
 
             var installation2 = new Installation
@@ -71,8 +71,8 @@ namespace Api.Database.Context
             {
                 Id = Guid.NewGuid().ToString(),
                 Installation = installations[0],
-                Name = "HULDRA",
-                PlantCode = "HUA",
+                Name = "Northern Lights",
+                PlantCode = "NLS",
             };
 
             var plant2 = new Plant
@@ -91,9 +91,21 @@ namespace Api.Database.Context
             var inspectionArea1 = new InspectionArea
             {
                 Id = Guid.NewGuid().ToString(),
-                Plant = plants[0],
-                Installation = plants[0].Installation,
+                Plant = plants[1],
+                Installation = plants[1].Installation,
                 Name = "TestInspectionArea",
+                AreaPolygon = new AreaPolygon
+                {
+                    ZMin = 0,
+                    ZMax = 1000,
+                    Positions =
+                    [
+                        new PolygonPoint { X = 0, Y = 0 },
+                        new PolygonPoint { X = 0, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 0 },
+                    ],
+                },
             };
 
             var inspectionArea2 = new InspectionArea
@@ -102,6 +114,18 @@ namespace Api.Database.Context
                 Plant = plants[0],
                 Installation = plants[0].Installation,
                 Name = "TestInspectionArea2",
+                AreaPolygon = new AreaPolygon
+                {
+                    ZMin = -1,
+                    ZMax = 0,
+                    Positions =
+                    [
+                        new PolygonPoint { X = 0, Y = 0 },
+                        new PolygonPoint { X = 0, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 0 },
+                    ],
+                },
             };
 
             var inspectionArea3 = new InspectionArea
@@ -110,6 +134,18 @@ namespace Api.Database.Context
                 Plant = plants[0],
                 Installation = plants[0].Installation,
                 Name = "TestInspectionArea3",
+                AreaPolygon = new AreaPolygon
+                {
+                    ZMin = -2,
+                    ZMax = -1,
+                    Positions =
+                    [
+                        new PolygonPoint { X = 0, Y = 0 },
+                        new PolygonPoint { X = 0, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 0 },
+                    ],
+                },
             };
 
             var inspectionArea4 = new InspectionArea
@@ -118,6 +154,18 @@ namespace Api.Database.Context
                 Plant = plants[0],
                 Installation = plants[0].Installation,
                 Name = "TestInspectionArea4",
+                AreaPolygon = new AreaPolygon
+                {
+                    ZMin = -3,
+                    ZMax = -2,
+                    Positions =
+                    [
+                        new PolygonPoint { X = 0, Y = 0 },
+                        new PolygonPoint { X = 0, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 0 },
+                    ],
+                },
             };
 
             var inspectionAreaHuldraMezzanine = new InspectionArea
@@ -126,6 +174,18 @@ namespace Api.Database.Context
                 Plant = plants[0],
                 Installation = plants[0].Installation,
                 Name = "Huldra Mezzanine InspectionArea",
+                AreaPolygon = new AreaPolygon
+                {
+                    ZMin = -4,
+                    ZMax = -3,
+                    Positions =
+                    [
+                        new PolygonPoint { X = 0, Y = 0 },
+                        new PolygonPoint { X = 0, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 6000 },
+                        new PolygonPoint { X = 21000, Y = 0 },
+                    ],
+                },
             };
 
             var inspectionAreaKLab = new InspectionArea
@@ -134,6 +194,18 @@ namespace Api.Database.Context
                 Plant = plants[1],
                 Installation = plants[1].Installation,
                 Name = "K-Lab",
+                AreaPolygon = new AreaPolygon
+                {
+                    ZMin = 13,
+                    ZMax = 40,
+                    Positions =
+                    [
+                        new PolygonPoint { X = 20175, Y = 5216 },
+                        new PolygonPoint { X = 20175, Y = 5262 },
+                        new PolygonPoint { X = 20203, Y = 5262 },
+                        new PolygonPoint { X = 20203, Y = 5216 },
+                    ],
+                },
             };
 
             return new List<InspectionArea>(
@@ -187,13 +259,13 @@ namespace Api.Database.Context
 
             var robot3 = new Robot
             {
-                Name = "Placebot",
+                Name = "Placebot Hercules",
                 IsarId = "00000000-0000-0000-0000-000000000000",
                 SerialNumber = "Placebot1",
                 Status = RobotStatus.Available,
                 Host = "localhost",
                 Port = 3000,
-                CurrentInstallation = installations[0],
+                CurrentInstallation = installations[1],
                 CurrentInspectionAreaId = inspectionAreas[0].Id,
                 Documentation = [],
             };
