@@ -32,7 +32,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-
   comment_info:
     needs: base_check
     runs-on: ubuntu-latest
