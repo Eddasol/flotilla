@@ -38,7 +38,10 @@ jobs:
       # We don't have the ref in the IssueComment trigger so we need to check out the pr number
       - name: Checkout Pull Request
         if: ${{ inputs.PullRequestCheckout }}
-        run: gh pr checkout ${{ github.event.issue.number }}
+        run: |
+          PR_NUMBER=${{ github.event.issue.number }}
+          COMMIT_SHA=$(gh pr view $PR_NUMBER --json commits -q '.commits[-1].oid')
+          gh pr checkout $COMMIT_SHA
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
