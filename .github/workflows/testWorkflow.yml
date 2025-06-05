@@ -51,4 +51,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            :eyes: Pull request: ${{ github.event.issue.pull_request }}, Issue number${{ github.event.issue.number }}, sha ${{ github.event.issue.pull_request.head.sha }} :eyes:
+            :eyes: Pull request: ${{ github.event.issue.pull_request }}, Issue number${{ github.event.issue.number }}, sha ${{ github.event.issue.pull_request.head.sha }}, pr ${{github.event.pull_request.head.sha}} :eyes:
