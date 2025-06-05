@@ -10,6 +10,7 @@ defaults:
 
 jobs:
   # The base job checks if comment is the right function and made on a pull request
+  # Something new
   base_check:
     if: |
       github.event.issue.pull_request &&
@@ -39,13 +40,6 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - name: Remove 'eyes' reaction
-        uses: octokit/request-action@v2.x
-        with:
-          route: DELETE /repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions/${{ needs.get_review_state.outputs.eyes_id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: React to comment
         uses: peter-evans/create-or-update-comment@v4
         with:
