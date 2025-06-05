@@ -1,4 +1,4 @@
-name: Update database
+name: Test workflow
 
 on:
   issue_comment:
@@ -10,7 +10,6 @@ defaults:
 
 jobs:
   # The base job checks if comment is the right function and made on a pull request
-  # Something new
   base_check:
     if: |
       github.event.issue.pull_request &&
@@ -34,7 +33,7 @@ jobs:
 
 
 
-  database_update_start:
+  comment_info:
     needs: base_check
     runs-on: ubuntu-latest
     permissions:
@@ -52,4 +51,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            :eyes: Doing something ${{github.event.issue.pull_request.head.sha}} :eyes:
+            :eyes: Pull request: ${{ github.event.issue.pull_request }}, Issue number${{ github.event.issue.number }}, sha ${{ github.event.issue.pull_request.head.sha }} :eyes:
