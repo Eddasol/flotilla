@@ -1,0 +1,53 @@
+name: Check migration timestamp
+
+on:
+  pull_request_target:
+    branches: [main]
+    paths: [backend/api/Migrations/**]
+
+jobs:
+  check-timestamp:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get new migration file timestamp
+        id: get_new_file
+        run: |
+          NEW_FILE=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'backend/api/Migrations/.*Designer\.cs$')
+          if [ -z "$NEW_FILE" ]; then
+            echo "No new migration files ending with Designer.cs added."
+            exit 0
+          fi
+
+          TIMESTAMP=$(echo "$NEW_FILE" | cut -d'_' -f1)
+          echo "New migration file: $NEW_FILE with timestamp: $TIMESTAMP"
+          echo "::set-output name=timestamp::$TIMESTAMP"
+          echo "::set-output name=file::$NEW_FILE"
+
+      - name: Check existing migration files
+        id: check_existing
+        run: |
+          NEW_TIMESTAMP="${{ steps.get_new_file.outputs.timestamp }}"
+          echo "Checking existing migration files..."
+
+          LATEST_TIMESTAMP=0
+          for file in backend/api/Migrations/*; do
+            if [[ -f "$file" ]]; then
+              FILE_TIMESTAMP=$(basename "$file" | cut -d'_' -f1)
+              if (( FILE_TIMESTAMP > LATEST_TIMESTAMP )); then
+                LATEST_TIMESTAMP=$FILE_TIMESTAMP
+              fi
+            fi
+          done
+
+          echo "Latest existing timestamp: $LATEST_TIMESTAMP"
+
+          if (( NEW_TIMESTAMP <= LATEST_TIMESTAMP )); then
+            echo "New migration file timestamp $NEW_TIMESTAMP is not newer than the latest existing timestamp $LATEST_TIMESTAMP."
+            exit 1
+          else
+            echo "New migration file timestamp $NEW_TIMESTAMP is valid."
+          fi
