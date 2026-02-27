@@ -231,6 +231,10 @@ namespace Api.Services
                 logger.LogWarning("{Message}", errorMessage);
                 throw new MissionRunNotFoundException(errorMessage);
             }
+            else if (missionRun.IsCompleted)
+            {
+                throw new MissionAlreadyCompletedException("");
+            }
 
             await missionRunService.UpdateMissionRunProperty(
                 missionRun.Id,

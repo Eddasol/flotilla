@@ -391,6 +391,14 @@ namespace Api.EventHandlers
                     isarAbortedMission.Reason
                 );
             }
+            catch (MissionAlreadyCompletedException)
+            {
+                _logger.LogInformation(
+                    "Mission with id '{MissionToAbort}' for robot '{RobotName}' was already completed when ISAR aborted the mission. No action required.",
+                    isarAbortedMission.MissionId,
+                    robot.Name
+                );
+            }
             catch (RobotNotFoundException)
             {
                 _logger.LogWarning(
@@ -810,6 +818,14 @@ namespace Api.EventHandlers
                 _logger.LogInformation(
                     "Mission with id '{Id}' was aborted for robot '{RobotName}' due to ISAR restart",
                     missionRun.Id,
+                    robot.Name
+                );
+            }
+            catch (MissionAlreadyCompletedException)
+            {
+                _logger.LogInformation(
+                    "Mission with id '{MissionToAbort}' for robot '{RobotName}' was already completed when ISAR restarted. No action required.",
+                    missionToAbort,
                     robot.Name
                 );
             }
